@@ -1,0 +1,2274 @@
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (1.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateEvents (20121121153536)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  CREATE TABLE "events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "location" varchar(255), "price" decimal, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20121121153536"]]
+  [1m[35m (1.5ms)[0m  commit transaction
+Migrating to AddFieldsToEvents (20121121175436)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (17.8ms)[0m  ALTER TABLE "events" ADD "starts_at" datetime
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "events" ADD "description" text[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20121121175436"]]
+  [1m[36m (1.5ms)[0m  [1mcommit transaction[0m
+Migrating to AddImageFileAndCapacityToEvents (20121210230623)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "events" ADD "image_file_name" varchar(255)[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "events" ADD "capacity" integer DEFAULT 1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20121210230623"]]
+  [1m[35m (1.6ms)[0m  commit transaction
+Migrating to CreateRegistrations (20121214204822)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  CREATE TABLE "registrations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "email" varchar(255), "how_heard" varchar(255), "event_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_registrations_on_event_id" ON "registrations" ("event_id")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20121214204822"]]
+  [1m[36m (1.3ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_registrations_on_event_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_registrations_on_event_id' AND type='index'
+[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "events" ("capacity", "created_at", "description", "image_file_name", "location", "name", "price", "starts_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["capacity", 75], ["created_at", "2014-11-05 17:35:42.975322"], ["description", "Join us for a fun evening of bug smashing! It's a great way to get involved in open source projects whether you're reporting bugs, fixing bugs, or even inadvertently creating a few bugs!"], ["image_file_name", "bugsmash.png"], ["location", "Wynkoop in LoDo, Denver, CO"], ["name", "BugSmash"], ["price", 0.0], ["starts_at", "2015-02-13 17:35:42.960399"], ["updated_at", "2014-11-05 17:35:42.975322"]]
+  [1m[36m (1.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "events" ("capacity", "created_at", "description", "image_file_name", "location", "name", "price", "starts_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["capacity", 100], ["created_at", "2014-11-05 17:35:42.979840"], ["description", "Got a killer app idea you've been itching to work on? Hunker down at the Hackathon! This is an intense, focused day of hacking on anything you want. The entry fee goes toward a bounty of cash and prizes for winners in a variety of categories."], ["image_file_name", "hackathon.png"], ["location", "Buffalo Billiards, Austin, TX"], ["name", "Hackathon"], ["price", 15.0], ["starts_at", "2015-03-05 17:35:42.960779"], ["updated_at", "2014-11-05 17:35:42.979840"]]
+  [1m[35m (1.3ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "events" ("capacity", "created_at", "description", "image_file_name", "location", "name", "price", "starts_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["capacity", 50], ["created_at", "2014-11-05 17:35:42.983076"], ["description", "Kata Camp is where developers go to practice their craft without the interruptions of a typical project. Forget about having to actually ship something. Tell your manager you're going to Kata Camp for the day! Price includes a buffet lunch and a leather-bound journal to record your kata achievements."], ["image_file_name", "katacamp.png"], ["location", "Double R Ranch, Dallas, TX"], ["name", "Kata Camp"], ["price", 75.0], ["starts_at", "2015-04-04 17:35:42.960946"], ["updated_at", "2014-11-05 17:35:42.983076"]]
+  [1m[36m (1.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "events" ("capacity", "created_at", "description", "image_file_name", "location", "name", "price", "starts_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["capacity", 15], ["created_at", "2014-11-05 17:35:42.986632"], ["description", "Start your day off right with a good cup of Joe while you sling some code. By the time you hit the office, you'll be all tuned up!"], ["image_file_name", "coffeecode.png"], ["location", "Stumptown Coffee, Portland, OR"], ["name", "Coffee and Code"], ["price", 0.0], ["starts_at", "2015-04-24 17:35:42.961117"], ["updated_at", "2014-11-05 17:35:42.986632"]]
+  [1m[35m (1.2ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "events" ("capacity", "created_at", "description", "image_file_name", "location", "name", "price", "starts_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["capacity", 150], ["created_at", "2014-11-05 17:35:42.990751"], ["description", "Brew up the tastiest Mac app and win! Entry fee includes a stylish apron."], ["image_file_name", "cocoacookoff.png"], ["location", "1 Infinite Loop, Cupertino, CA"], ["name", "Cocoa Cook-off"], ["price", 25.0], ["starts_at", "2015-05-04 17:35:42.961233"], ["updated_at", "2014-11-05 17:35:42.990751"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "events" ("capacity", "created_at", "description", "image_file_name", "location", "name", "price", "starts_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["capacity", 200], ["created_at", "2014-11-05 17:35:42.994222"], ["description", "Join us for a non-stop evening of Muppet mania! We'll watch all the hits (and flops), starting with the classics from back in the day and ending with the latest release."], ["image_file_name", "moviemarathon.png"], ["location", "Disney Theatre, Orlando, FL"], ["name", "Muppets Movie Marathon"], ["price", 15.0], ["starts_at", "2015-05-14 17:35:42.961335"], ["updated_at", "2014-11-05 17:35:42.994222"]]
+  [1m[35m (1.3ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "events" ("capacity", "created_at", "description", "image_file_name", "location", "name", "price", "starts_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["capacity", 75], ["created_at", "2014-11-05 17:35:42.998209"], ["description", "Come sing along with your favorite country band in Music City! Cover charge includes a confidence-boosting beverage of your choice and entry into the YeeHaw Yodelin' contest."], ["image_file_name", "karaoke.png"], ["location", "Hokey Pokey Saloon, Nashville, TN"], ["name", "Hokey Karaoke"], ["price", 25.0], ["starts_at", "2015-05-24 17:35:42.961466"], ["updated_at", "2014-11-05 17:35:42.998209"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "events" ("capacity", "created_at", "description", "image_file_name", "location", "name", "price", "starts_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["capacity", 30], ["created_at", "2014-11-05 17:35:43.002773"], ["description", "Come meet local Rails developers and enjoy a technical talk by a local celebrity. This week's topic is a comparison of testing frameworks, templating systems, and whether to use tabs or spaces."], ["image_file_name", "placeholder.png"], ["location", "Reston, VA"], ["name", "Rails User Group"], ["price", 0.0], ["starts_at", "2014-11-03 17:35:42.961597"], ["updated_at", "2014-11-05 17:35:43.002773"]]
+  [1m[35m (1.1ms)[0m  commit transaction
+  [1m[36mEvent Load (0.3ms)[0m  [1mSELECT  "events".* FROM "events"  WHERE "events"."name" = 'BugSmash' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "registrations" ("created_at", "email", "event_id", "how_heard", "name", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["created_at", "2014-11-05 17:35:43.125457"], ["email", "larry@stooges.com"], ["event_id", 1], ["how_heard", "Newsletter"], ["name", "Larry"], ["updated_at", "2014-11-05 17:35:43.125457"]]
+  [1m[35m (1.6ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "registrations" ("created_at", "email", "event_id", "how_heard", "name", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["created_at", "2014-11-05 17:35:43.130773"], ["email", "moe@stooges.com"], ["event_id", 1], ["how_heard", "Blog Post"], ["name", "Moe"], ["updated_at", "2014-11-05 17:35:43.130773"]]
+  [1m[36m (1.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "registrations" ("created_at", "email", "event_id", "how_heard", "name", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["created_at", "2014-11-05 17:35:43.134205"], ["email", "curly@stooges.com"], ["event_id", 1], ["how_heard", "Twitter"], ["name", "Curly"], ["updated_at", "2014-11-05 17:35:43.134205"]]
+  [1m[35m (1.1ms)[0m  commit transaction
+  [1m[36mEvent Load (0.3ms)[0m  [1mSELECT  "events".* FROM "events"  WHERE "events"."name" = 'Kata Camp' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "registrations" ("created_at", "email", "event_id", "how_heard", "name", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["created_at", "2014-11-05 17:35:43.139609"], ["email", "moe@stooges.com"], ["event_id", 3], ["how_heard", "Web Search"], ["name", "Moe"], ["updated_at", "2014-11-05 17:35:43.139609"]]
+  [1m[35m (1.5ms)[0m  commit transaction
+
+
+Started GET "/" for 127.0.0.1 at 2014-11-05 09:44:39 -0800
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by EventsController#index as HTML
+  [1m[35mEvent Load (0.4ms)[0m  SELECT "events".* FROM "events"  WHERE (starts_at >= '2014-11-05 17:44:40.013958')  ORDER BY "events"."starts_at" ASC
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 1]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 2]]
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 3]]
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 4]]
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 5]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 6]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 7]]
+  Rendered events/index.html.erb within layouts/application (250.4ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+  Rendered layouts/_flashes.html.erb (1.0ms)
+  Rendered layouts/_sidebar.html.erb (1.6ms)
+  Rendered layouts/_footer.html.erb (0.7ms)
+Completed 200 OK in 2269ms (Views: 2241.3ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+Processing by EventsController#index as HTML
+  [1m[35mEvent Load (0.4ms)[0m  SELECT "events".* FROM "events"  WHERE (starts_at >= '2014-11-05 17:44:42.272478')  ORDER BY "events"."starts_at" ASC
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 1]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 2]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 3]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 4]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 5]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 6]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 7]]
+  Rendered events/index.html.erb within layouts/application (23.9ms)
+  Rendered layouts/_header.html.erb (0.2ms)
+  Rendered layouts/_flashes.html.erb (0.2ms)
+  Rendered layouts/_sidebar.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.1ms)
+Completed 200 OK in 191ms (Views: 186.3ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-11-05 09:44:42 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/bugsmash.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/coffeecode.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/moviemarathon.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/cocoacookoff.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/hackathon.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/karaoke.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/katacamp.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/arrow.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/logo.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/background.jpg" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+
+
+Started GET "/assets/add.png" for 127.0.0.1 at 2014-11-05 09:44:43 -0800
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20141105175209)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.6ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "email" varchar(255), "password_digest" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20141105175209"]]
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_registrations_on_event_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_registrations_on_event_id' AND type='index'
+[0m
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (19.6ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE LOWER("users"."email") = LOWER('rhino.j.benedetti@gmail.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users"  WHERE LOWER("users"."email") = LOWER('rhino.j.benedetti@gmail.com') LIMIT 1
+Binary data inserted for `string` type on column `password_digest`
+  [1m[36mSQL (42.8ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "name", "password_digest", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", "2014-11-06 00:24:10.284300"], ["email", "rhino.j.benedetti@gmail.com"], ["name", "Ryan"], ["password_digest", "$2a$10$cvtkm4je/EEI7MSovXytK.osB16GDWzU4IN0ICtQJjkdBGAqGkDom"], ["updated_at", "2014-11-06 00:24:10.284300"]]
+  [1m[35m (63.3ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (20.9ms)[0m  SELECT  1 AS one FROM "users"  WHERE LOWER("users"."email") = LOWER('shonna.sims@gmail.com') LIMIT 1
+Binary data inserted for `string` type on column `password_digest`
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "name", "password_digest", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", "2014-11-06 00:42:40.864162"], ["email", "shonna.sims@gmail.com"], ["name", "Shonna"], ["password_digest", "$2a$10$QoFk11lOKlmEKgTRzuhafuKH.csZNwYrs4suc5cb16ArZg4J5h4W."], ["updated_at", "2014-11-06 00:42:40.864162"]]
+  [1m[35m (1.5ms)[0m  commit transaction
+
+
+Started GET "/" for 127.0.0.1 at 2014-11-08 11:24:37 -0800
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by EventsController#index as HTML
+  [1m[35mEvent Load (23.0ms)[0m  SELECT "events".* FROM "events"  WHERE (starts_at >= '2014-11-08 19:24:38.192004')  ORDER BY "events"."starts_at" ASC
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 1]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 2]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 3]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 4]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 5]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 6]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 7]]
+  Rendered events/index.html.erb within layouts/application (355.2ms)
+  Rendered layouts/_header.html.erb (1.3ms)
+  Rendered layouts/_flashes.html.erb (0.6ms)
+  Rendered layouts/_sidebar.html.erb (0.6ms)
+  Rendered layouts/_footer.html.erb (0.3ms)
+Completed 200 OK in 1590ms (Views: 1437.1ms | ActiveRecord: 25.2ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-11-08 11:24:39 -0800
+
+
+Started GET "/assets/bugsmash.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/coffeecode.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/hackathon.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/katacamp.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/cocoacookoff.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/moviemarathon.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/karaoke.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/background.jpg" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/logo.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/arrow.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/assets/add.png" for 127.0.0.1 at 2014-11-08 11:24:40 -0800
+
+
+Started GET "/events/1" for 127.0.0.1 at 2014-11-08 11:24:48 -0800
+Processing by EventsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mEvent Load (0.3ms)[0m  SELECT  "events".* FROM "events"  WHERE "events"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 1]]
+  Rendered events/show.html.erb within layouts/application (6.4ms)
+  Rendered layouts/_header.html.erb (0.7ms)
+  Rendered layouts/_flashes.html.erb (0.5ms)
+  Rendered layouts/_sidebar.html.erb (0.6ms)
+  Rendered layouts/_footer.html.erb (0.3ms)
+Completed 200 OK in 105ms (Views: 101.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/events/1" for 127.0.0.1 at 2014-11-08 11:25:26 -0800
+Processing by EventsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mEvent Load (0.2ms)[0m  SELECT  "events".* FROM "events"  WHERE "events"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 1]]
+  Rendered events/show.html.erb within layouts/application (3.8ms)
+  Rendered layouts/_header.html.erb (0.2ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 137ms (Views: 134.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-03-02 10:46:37 -0800
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by EventsController#index as HTML
+  [1m[35mEvent Load (22.0ms)[0m  SELECT "events".* FROM "events"  WHERE (starts_at >= '2015-03-02 18:46:38.574692')  ORDER BY "events"."starts_at" ASC
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 2]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 3]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 4]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 5]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 6]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 7]]
+  Rendered events/index.html.erb within layouts/application (505.2ms)
+  Rendered layouts/_header.html.erb (0.9ms)
+  Rendered layouts/_flashes.html.erb (0.5ms)
+  Rendered layouts/_sidebar.html.erb (0.6ms)
+  Rendered layouts/_footer.html.erb (0.3ms)
+Completed 200 OK in 2055ms (Views: 1981.1ms | ActiveRecord: 24.0ms)
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/hackathon.png" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/katacamp.png" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/karaoke.png" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/moviemarathon.png" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/cocoacookoff.png" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/coffeecode.png" for 127.0.0.1 at 2015-03-02 10:46:40 -0800
+
+
+Started GET "/assets/background.jpg" for 127.0.0.1 at 2015-03-02 10:46:41 -0800
+
+
+Started GET "/assets/logo.png" for 127.0.0.1 at 2015-03-02 10:46:41 -0800
+
+
+Started GET "/assets/arrow.png" for 127.0.0.1 at 2015-03-02 10:46:41 -0800
+
+
+Started GET "/assets/add.png" for 127.0.0.1 at 2015-03-02 10:46:41 -0800
+
+
+Started GET "/users/" for 127.0.0.1 at 2015-03-02 10:47:04 -0800
+
+AbstractController::ActionNotFound (The action 'index' could not be found for UsersController):
+  actionpack (4.1.6) lib/abstract_controller/base.rb:131:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.2) lib/rack/etag.rb:23:in `call'
+  rack (1.5.2) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.5.2) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.6ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2015-03-02 11:24:27 -0800
+Processing by UsersController#index as HTML
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "users"[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users"
+  Rendered users/index.html.erb within layouts/application (9.7ms)
+  Rendered layouts/_header.html.erb (0.2ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 483ms (Views: 79.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 11:24:28 -0800
+
+
+Started GET "/users/" for 127.0.0.1 at 2015-03-02 14:19:03 -0800
+Processing by UsersController#index as HTML
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "users"[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users"
+  Rendered users/index.html.erb within layouts/application (9.0ms)
+  Rendered layouts/_header.html.erb (60.3ms)
+  Rendered layouts/_flashes.html.erb (0.2ms)
+  Rendered layouts/_sidebar.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 223ms (Views: 192.6ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:19:04 -0800
+
+
+Started GET "/users/1" for 127.0.0.1 at 2015-03-02 14:19:05 -0800
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  Rendered users/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_header.html.erb (0.7ms)
+  Rendered layouts/_flashes.html.erb (0.4ms)
+  Rendered layouts/_sidebar.html.erb (0.6ms)
+  Rendered layouts/_footer.html.erb (0.3ms)
+Completed 200 OK in 75ms (Views: 71.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/users/2" for 127.0.0.1 at 2015-03-02 14:19:08 -0800
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  Rendered users/show.html.erb within layouts/application (0.1ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 77ms (Views: 75.0ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2015-03-02 14:21:07 -0800
+Processing by UsersController#index as HTML
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  Rendered users/index.html.erb within layouts/application (2.7ms)
+  Rendered layouts/_header.html.erb (17.0ms)
+Completed 500 Internal Server Error in 179ms
+
+SyntaxError (/Users/benedett/rails_ii_studio/events/app/views/layouts/_header.html.erb:6: syntax error, unexpected '='
+...Sign Up', new_user_path, class="button" );@output_buffer.saf...
+...                               ^):
+  app/views/layouts/_header.html.erb:6: syntax error, unexpected '='
+  app/views/layouts/application.html.erb:11:in `_app_views_layouts_application_html_erb__255770011189065877_70281276478780'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (0.8ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (23.6ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+Processing by UsersController#index as HTML
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "users"[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  Rendered users/index.html.erb within layouts/application (3.9ms)
+  Rendered layouts/_header.html.erb (0.9ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.1ms)
+Completed 200 OK in 87ms (Views: 85.1ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:21:41 -0800
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:21:44 -0800
+
+AbstractController::ActionNotFound (The action 'new' could not be found for UsersController):
+  actionpack (4.1.6) lib/abstract_controller/base.rb:131:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.2) lib/rack/etag.rb:23:in `call'
+  rack (1.5.2) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.5.2) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (1.0ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:21:44 -0800
+
+AbstractController::ActionNotFound (The action 'new' could not be found for UsersController):
+  actionpack (4.1.6) lib/abstract_controller/base.rb:131:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.2) lib/rack/etag.rb:23:in `call'
+  rack (1.5.2) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.5.2) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.6ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+Processing by UsersController#index as HTML
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "users"[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users"
+  Rendered users/index.html.erb within layouts/application (9.3ms)
+  Rendered layouts/_header.html.erb (0.8ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 94ms (Views: 88.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:31:35 -0800
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:31:37 -0800
+Processing by UsersController#new as HTML
+  Rendered users/new.html.erb within layouts/application (3.1ms)
+Completed 500 Internal Server Error in 6ms
+
+ActionView::Template::Error (Missing partial users/_form, application/_form with {:locale=>[:en], :formats=>[:html, :xml], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/Users/benedett/rails_ii_studio/events/app/views"
+):
+    2:   <h1>Sign Up</h1>
+    3: </header>
+    4: 
+    5: <!-- <%= render 'form'%> -->
+    6: 
+    7: 
+    8: <%= form_for(@event) do |f| %>
+  app/views/users/new.html.erb:5:in `_app_views_users_new_html_erb__216323000398602902_70281286639100'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.3ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (12.4ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:31:37 -0800
+Processing by UsersController#new as HTML
+  Rendered users/new.html.erb within layouts/application (3.4ms)
+Completed 500 Internal Server Error in 7ms
+
+ActionView::Template::Error (Missing partial users/_form, application/_form with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/Users/benedett/rails_ii_studio/events/app/views"
+):
+    2:   <h1>Sign Up</h1>
+    3: </header>
+    4: 
+    5: <!-- <%= render 'form'%> -->
+    6: 
+    7: 
+    8: <%= form_for(@event) do |f| %>
+  app/views/users/new.html.erb:5:in `_app_views_users_new_html_erb__216323000398602902_70281254230340'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (12.4ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:31:50 -0800
+Processing by UsersController#new as HTML
+  Rendered users/new.html.erb within layouts/application (2.6ms)
+Completed 500 Internal Server Error in 7ms
+
+ActionView::Template::Error (First argument in form cannot contain nil or be empty):
+     5: 
+     6: 
+     7: 
+     8: <%= form_for(@event) do |f| %>
+     9: 
+    10: 	<%= render 'shared/errors', object: @user  %>
+    11: 
+  app/views/users/new.html.erb:8:in `_app_views_users_new_html_erb__216323000398602902_70281277298460'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.3ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (15.7ms)
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:32:20 -0800
+Processing by UsersController#new as HTML
+  Rendered shared/_errors.html.erb (226.0ms)
+  Rendered users/new.html.erb within layouts/application (310.9ms)
+  Rendered layouts/_header.html.erb (0.2ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 381ms (Views: 379.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:21 -0800
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+Processing by UsersController#new as HTML
+  Rendered shared/_errors.html.erb (0.1ms)
+  Rendered users/new.html.erb within layouts/application (5.3ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 88ms (Views: 86.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:32:47 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:33:16 -0800
+
+AbstractController::ActionNotFound (The action 'create' could not be found for UsersController):
+  actionpack (4.1.6) lib/abstract_controller/base.rb:131:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.2) lib/rack/etag.rb:23:in `call'
+  rack (1.5.2) lib/rack/conditionalget.rb:35:in `call'
+  rack (1.5.2) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.6ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Jones", "email"=>"Jones@jones.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  Rendered shared/_errors.html.erb (3.6ms)
+  Rendered users/new.html.erb within layouts/application (9.5ms)
+  Rendered layouts/_header.html.erb (0.2ms)
+  Rendered layouts/_flashes.html.erb (0.2ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 225ms (Views: 84.1ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:33 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Jones", "email"=>"Jones@jones.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" IS NULL LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  Rendered shared/_errors.html.erb (2.7ms)
+  Rendered users/new.html.erb within layouts/application (7.2ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 147ms (Views: 142.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:44 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Jones", "email"=>"Jones@jones.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  Rendered shared/_errors.html.erb (3.5ms)
+  Rendered users/new.html.erb within layouts/application (10.7ms)
+  Rendered layouts/_header.html.erb (0.2ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.1ms)
+Completed 200 OK in 96ms (Views: 87.1ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:35:56 -0800
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+Processing by UsersController#new as HTML
+  Rendered shared/_errors.html.erb (0.1ms)
+  Rendered users/new.html.erb within layouts/application (3.1ms)
+  Rendered layouts/_header.html.erb (0.4ms)
+  Rendered layouts/_flashes.html.erb (0.2ms)
+  Rendered layouts/_sidebar.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 157ms (Views: 156.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:02 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Skizzy", "email"=>"skizzy@skizzy.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" IS NULL LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  Rendered shared/_errors.html.erb (2.2ms)
+  Rendered users/new.html.erb within layouts/application (5.9ms)
+  Rendered layouts/_header.html.erb (0.2ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 90ms (Views: 84.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:36:25 -0800
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:37:29 -0800
+Processing by UsersController#new as HTML
+  Rendered shared/_errors.html.erb (0.5ms)
+  Rendered users/new.html.erb within layouts/application (9.9ms)
+  Rendered layouts/_header.html.erb (0.8ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 99ms (Views: 92.3ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:37:47 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Ryan", "email"=>"Ryan@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  Rendered shared/_errors.html.erb (2.5ms)
+  Rendered users/new.html.erb within layouts/application (6.1ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 92ms (Views: 80.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:37:47 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:37:48 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Ryan", "email"=>"Ryan@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" IS NULL LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  Rendered shared/_errors.html.erb (2.4ms)
+  Rendered users/new.html.erb within layouts/application (26.3ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 111ms (Views: 102.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:38:59 -0800
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+Processing by UsersController#new as HTML
+  Rendered shared/_errors.html.erb (0.1ms)
+  Rendered users/new.html.erb within layouts/application (6.4ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 171ms (Views: 170.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:15 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:16 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:16 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:16 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:16 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Ryan", "email"=>"ryan@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  Rendered shared/_errors.html.erb (2.8ms)
+  Rendered users/new.html.erb within layouts/application (7.0ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 89ms (Views: 81.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:40:31 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:42:40 -0800
+  [1m[36mActiveRecord::SchemaMigration Load (13.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Ryan", "email"=>"ryan@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" IS NULL LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  Rendered shared/_errors.html.erb (3.3ms)
+  Rendered users/new.html.erb within layouts/application (24.3ms)
+  Rendered layouts/_header.html.erb (0.8ms)
+  Rendered layouts/_flashes.html.erb (0.4ms)
+  Rendered layouts/_sidebar.html.erb (0.5ms)
+  Rendered layouts/_footer.html.erb (0.3ms)
+Completed 200 OK in 734ms (Views: 547.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:42:41 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:42:42 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:42:42 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:42:42 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:42:42 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"", "email"=>"", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (21.5ms)[0m  SELECT  1 AS one FROM "users"  WHERE LOWER("users"."email") = LOWER('') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  Rendered shared/_errors.html.erb (2.5ms)
+  Rendered users/new.html.erb within layouts/application (6.6ms)
+  Rendered layouts/_header.html.erb (0.2ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 121ms (Views: 81.2ms | ActiveRecord: 22.2ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:44:54 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Curly", "email"=>"curly@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE LOWER("users"."email") = LOWER('curly@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  Rendered shared/_errors.html.erb (0.8ms)
+  Rendered users/new.html.erb within layouts/application (66.3ms)
+  Rendered layouts/_header.html.erb (0.4ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 253ms (Views: 155.2ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:33 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:34 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:34 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:34 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:34 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:34 -0800
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fbaRdgIpQdsxWoSV9YAdF+m76EU92sKlZ0Yu+/sILqk=", "user"=>{"name"=>"Curly", "email"=>"curly@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Create User"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users"  WHERE LOWER("users"."email") = LOWER('curly@example.com') LIMIT 1
+Binary data inserted for `string` type on column `password_digest`
+  [1m[36mSQL (15.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "name", "password_digest", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", "2015-03-02 22:45:56.087605"], ["email", "curly@example.com"], ["name", "Curly"], ["password_digest", "$2a$10$UFOELGsC3w5u9xk9TxPdoOABbASWAoptqaeREhfO3KrvzkcZRBwUi"], ["updated_at", "2015-03-02 22:45:56.087605"]]
+  [1m[35m (15.0ms)[0m  commit transaction
+Redirected to http://localhost:3000/users/3
+Completed 302 Found in 107ms (ActiveRecord: 30.4ms)
+
+
+Started GET "/users/3" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 3]]
+  Rendered users/show.html.erb within layouts/application (0.9ms)
+  Rendered layouts/_header.html.erb (0.6ms)
+  Rendered layouts/_flashes.html.erb (0.2ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 93ms (Views: 91.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:45:56 -0800
+
+
+Started GET "/users/3" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 3]]
+  Rendered users/show.html.erb within layouts/application (1.4ms)
+  Rendered layouts/_header.html.erb (0.5ms)
+  Rendered layouts/_flashes.html.erb (0.2ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 93ms (Views: 89.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:49:37 -0800
+
+
+Started GET "/users/3/edit" for 127.0.0.1 at 2015-03-02 14:49:39 -0800
+
+AbstractController::ActionNotFound (The action 'edit' could not be found for UsersController):
+  actionpack (4.1.6) lib/abstract_controller/base.rb:131:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.2) lib/rack/etag.rb:23:in `call'
+  rack (1.5.2) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.5.2) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.6ms)
+
+
+Started GET "/users/3/edit" for 127.0.0.1 at 2015-03-02 14:49:39 -0800
+
+AbstractController::ActionNotFound (The action 'edit' could not be found for UsersController):
+  actionpack (4.1.6) lib/abstract_controller/base.rb:131:in `process'
+  actionview (4.1.6) lib/action_view/rendering.rb:30:in `process'
+  actionpack (4.1.6) lib/action_controller/metal.rb:196:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  actionpack (4.1.6) lib/action_controller/metal.rb:232:in `block in action'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:82:in `dispatch'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:50:in `call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:73:in `block in call'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `each'
+  actionpack (4.1.6) lib/action_dispatch/journey/router.rb:59:in `call'
+  actionpack (4.1.6) lib/action_dispatch/routing/route_set.rb:678:in `call'
+  rack (1.5.2) lib/rack/etag.rb:23:in `call'
+  rack (1.5.2) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.5.2) lib/rack/head.rb:11:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/flash.rb:254:in `call'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.5.2) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.1.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.1.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:621:in `call'
+  activerecord (4.1.6) lib/active_record/migration.rb:380:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.6) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.6) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.6) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.6) lib/rails/engine.rb:514:in `call'
+  railties (4.1.6) lib/rails/application.rb:144:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+  /Users/benedett/.rvm/rubies/ruby-2.0.0-p598/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.6ms)
+
+
+Started GET "/users/3/edit" for 127.0.0.1 at 2015-03-02 14:54:35 -0800
+Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"3"}
+Completed 500 Internal Server Error in 8ms
+
+NameError (undefined local variable or method `uparams' for #<UsersController:0x007fbe8fbc7028>):
+  app/controllers/users_controller.rb:28:in `edit'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (0.8ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (21.2ms)
+
+
+Started GET "/users/3/edit" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 3]]
+  Rendered shared/_errors.html.erb (0.1ms)
+  Rendered users/_form.html.erb (4.9ms)
+  Rendered users/edit.html.erb within layouts/application (6.2ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 158ms (Views: 146.4ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:55:07 -0800
+
+
+Started GET "/users/3/edit" for 127.0.0.1 at 2015-03-02 14:57:40 -0800
+Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 3]]
+  Rendered users/_form.html.erb (1.2ms)
+  Rendered users/edit.html.erb within layouts/application (2.0ms)
+Completed 500 Internal Server Error in 7ms
+
+SyntaxError (/Users/benedett/rails_ii_studio/events/app/views/users/_form.html.erb:30: syntax error, unexpected ')', expecting :: or '[' or '.'
+...=( f.submit, "Create Account" );@output_buffer.safe_append='
+...                               ^
+/Users/benedett/rails_ii_studio/events/app/views/users/_form.html.erb:31: syntax error, unexpected keyword_else, expecting ')'
+'.freeze;     else 
+                  ^
+/Users/benedett/rails_ii_studio/events/app/views/users/_form.html.erb:32: syntax error, unexpected ')', expecting :: or '[' or '.'
+...=( f.submit, "Update Account" );@output_buffer.safe_append='
+...                               ^
+/Users/benedett/rails_ii_studio/events/app/views/users/_form.html.erb:33: syntax error, unexpected keyword_end, expecting ')'
+'.freeze;     end 
+                 ^
+/Users/benedett/rails_ii_studio/events/app/views/users/_form.html.erb:38: syntax error, unexpected keyword_end, expecting ')'
+'.freeze; end ;@output_buffer.to_s
+             ^
+/Users/benedett/rails_ii_studio/events/app/views/users/_form.html.erb:39: syntax error, unexpected keyword_ensure, expecting ')'
+/Users/benedett/rails_ii_studio/events/app/views/users/_form.html.erb:41: syntax error, unexpected keyword_end, expecting ')'):
+  app/views/users/_form.html.erb:30: syntax error, unexpected ')', expecting :: or '[' or '.'
+  app/views/users/_form.html.erb:31: syntax error, unexpected keyword_else, expecting ')'
+  app/views/users/_form.html.erb:32: syntax error, unexpected ')', expecting :: or '[' or '.'
+  app/views/users/_form.html.erb:33: syntax error, unexpected keyword_end, expecting ')'
+  app/views/users/_form.html.erb:38: syntax error, unexpected keyword_end, expecting ')'
+  app/views/users/_form.html.erb:39: syntax error, unexpected keyword_ensure, expecting ')'
+  app/views/users/_form.html.erb:41: syntax error, unexpected keyword_end, expecting ')'
+  app/views/users/edit.html.erb:5:in `_app_views_users_edit_html_erb__2465437096435961800_70228178932020'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.5ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.6ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (19.1ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:57:43 -0800
+
+
+Started GET "/users/3/edit" for 127.0.0.1 at 2015-03-02 14:58:13 -0800
+Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 3]]
+  Rendered shared/_errors.html.erb (0.1ms)
+  Rendered users/_form.html.erb (14.4ms)
+  Rendered users/edit.html.erb within layouts/application (15.2ms)
+Completed 500 Internal Server Error in 19ms
+
+ActionView::Template::Error (undefined local variable or method `user' for #<#<Class:0x007fbe8b509258>:0x007fbe8fa30cf0>):
+    26:     </ol>
+    27:     <p>
+    28: 
+    29:     <% if user.new_record? %>
+    30:       <%= f.submit "Create Account" %>
+    31:     <% else %>
+    32:       <%= f.submit "Update Account" %>
+  app/views/users/_form.html.erb:29:in `block in _app_views_users__form_html_erb___4585373786987791135_70228215209820'
+  app/views/users/_form.html.erb:1:in `_app_views_users__form_html_erb___4585373786987791135_70228215209820'
+  app/views/users/edit.html.erb:5:in `_app_views_users_edit_html_erb__2465437096435961800_70228178932020'
+
+
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (56.9ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /Users/benedett/.rvm/gems/ruby-2.0.0-p598/gems/actionpack-4.1.6/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (70.5ms)
+
+
+Started GET "/users/3/edit" for 127.0.0.1 at 2015-03-02 14:58:37 -0800
+Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 3]]
+  Rendered shared/_errors.html.erb (0.1ms)
+  Rendered users/_form.html.erb (6.5ms)
+  Rendered users/edit.html.erb within layouts/application (7.9ms)
+  Rendered layouts/_header.html.erb (0.4ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 91ms (Views: 89.3ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-02 14:58:37 -0800
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-02 14:58:37 -0800
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-02 14:58:37 -0800
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-02 14:58:37 -0800
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-02 14:58:37 -0800
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-02 14:58:38 -0800
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-02 14:58:38 -0800
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-02 14:58:38 -0800
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-02 14:58:38 -0800
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-02 14:58:38 -0800
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-02 14:58:38 -0800
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-02 14:58:38 -0800
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-02 14:58:38 -0800
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-02 14:58:38 -0800
+
+
+Started GET "/users/new" for 127.0.0.1 at 2015-03-02 14:58:45 -0800
+Processing by UsersController#new as HTML
+  Rendered shared/_errors.html.erb (0.5ms)
+  Rendered users/_form.html.erb (5.0ms)
+  Rendered users/new.html.erb within layouts/application (6.4ms)
+  Rendered layouts/_header.html.erb (0.8ms)
+  Rendered layouts/_flashes.html.erb (0.4ms)
+  Rendered layouts/_sidebar.html.erb (0.5ms)
+  Rendered layouts/_footer.html.erb (0.3ms)
+Completed 200 OK in 164ms (Views: 163.5ms | ActiveRecord: 0.0ms)
