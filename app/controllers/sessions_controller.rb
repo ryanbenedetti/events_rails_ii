@@ -17,6 +17,12 @@ class SessionsController < ApplicationController
 
   end
 
+ def destroy
+    session[:user_id] = nil
+    redirect_to root_url, notice: "Now, you're signed out."
+ end
+
+
   # def edit
   	
   # end
@@ -25,9 +31,7 @@ class SessionsController < ApplicationController
   	
   # end
 
-  # def destroy
-  	
-  # end
+ 
 
   # def show
   	
