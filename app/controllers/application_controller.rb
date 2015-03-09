@@ -7,6 +7,8 @@ private
 
   def require_signin
     unless current_user
+      # Keep track of where user was
+      session[:intended_url] = request.url
 	  redirect_to new_session_url, alert: "Please sign in first!"
 	end
   end
@@ -20,5 +22,13 @@ private
 
 #helper_methods are available to controllers and views
   helper_method :current_user
+
+  def current_user?(user)
+    current_user == user
+  end	
+ 
+ #helper_methods are available to controllers and views 
+  helper_method :current_user?
+
 
 end
