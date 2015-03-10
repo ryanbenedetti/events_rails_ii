@@ -9796,3 +9796,418 @@ Processing by UsersController#show as HTML
   Rendered layouts/_sidebar.html.erb (0.3ms)
   Rendered layouts/_footer.html.erb (0.0ms)
 Completed 200 OK in 151ms (Views: 149.1ms | ActiveRecord: 0.2ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddAdminToUsers (20150310155413)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "users" ADD "admin" boolean DEFAULT 'f'[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150310155413"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_registrations_on_event_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_registrations_on_event_id' AND type='index'
+[0m
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."name" = 'Shonna' LIMIT 1[0m
+
+
+Started GET "/users" for 127.0.0.1 at 2015-03-10 09:00:46 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "users"[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  Rendered users/index.html.erb within layouts/application (8.5ms)
+  Rendered layouts/_header.html.erb (1.4ms)
+  Rendered layouts/_flashes.html.erb (0.9ms)
+  Rendered layouts/_sidebar.html.erb (0.7ms)
+  Rendered layouts/_footer.html.erb (0.3ms)
+Completed 200 OK in 576ms (Views: 528.7ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/sessions.js?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-10 09:00:47 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2015-03-10 09:18:18 -0700
+Processing by EventsController#index as HTML
+  [1m[36mEvent Load (0.3ms)[0m  [1mSELECT "events".* FROM "events"  WHERE (starts_at >= '2015-03-10 16:18:18.669502')  ORDER BY "events"."starts_at" ASC[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 3]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 4]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 5]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 6]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 7]]
+  Rendered events/index.html.erb within layouts/application (310.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  Rendered layouts/_header.html.erb (2.0ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.2ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 549ms (Views: 501.1ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/sessions.js?body=1" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/katacamp.png" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/coffeecode.png" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/karaoke.png" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/cocoacookoff.png" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/assets/moviemarathon.png" for 127.0.0.1 at 2015-03-10 09:18:19 -0700
+
+
+Started GET "/events/new" for 127.0.0.1 at 2015-03-10 09:18:22 -0700
+Processing by EventsController#new as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+Redirected to http://localhost:3000/
+Filter chain halted as :require_admin rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-03-10 09:18:22 -0700
+Processing by EventsController#index as HTML
+  [1m[36mEvent Load (0.3ms)[0m  [1mSELECT "events".* FROM "events"  WHERE (starts_at >= '2015-03-10 16:18:22.466995')  ORDER BY "events"."starts_at" ASC[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 3]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 4]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 5]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 6]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 7]]
+  Rendered events/index.html.erb within layouts/application (11.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  Rendered layouts/_header.html.erb (2.8ms)
+  Rendered layouts/_flashes.html.erb (0.6ms)
+  Rendered layouts/_sidebar.html.erb (0.7ms)
+  Rendered layouts/_footer.html.erb (0.3ms)
+Completed 200 OK in 156ms (Views: 153.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+Processing by EventsController#index as HTML
+  [1m[35mEvent Load (0.4ms)[0m  SELECT "events".* FROM "events"  WHERE (starts_at >= '2015-03-10 16:20:49.467370')  ORDER BY "events"."starts_at" ASC
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 3]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 4]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 5]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 6]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 7]]
+  Rendered events/index.html.erb within layouts/application (12.9ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  Rendered layouts/_header.html.erb (1.8ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.8ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 150ms (Views: 147.9ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/sessions.js?body=1" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/katacamp.png" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/karaoke.png" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/moviemarathon.png" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/cocoacookoff.png" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/assets/coffeecode.png" for 127.0.0.1 at 2015-03-10 09:20:49 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2015-03-10 09:29:54 -0700
+Processing by EventsController#index as HTML
+  [1m[36mEvent Load (0.4ms)[0m  [1mSELECT "events".* FROM "events"  WHERE (starts_at >= '2015-03-10 16:29:54.869307')  ORDER BY "events"."starts_at" ASC[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 3]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 4]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 5]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 6]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 7]]
+  Rendered events/index.html.erb within layouts/application (26.7ms)
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  Rendered layouts/_header.html.erb (12.0ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.7ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 191ms (Views: 183.3ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/sessions.js?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/katacamp.png" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/cocoacookoff.png" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/coffeecode.png" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/moviemarathon.png" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/assets/karaoke.png" for 127.0.0.1 at 2015-03-10 09:29:55 -0700
+
+
+Started GET "/events/3" for 127.0.0.1 at 2015-03-10 09:29:56 -0700
+Processing by EventsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mEvent Load (0.3ms)[0m  SELECT  "events".* FROM "events"  WHERE "events"."id" = ? LIMIT 1  [["id", 3]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 3]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 3]]
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  Rendered events/show.html.erb within layouts/application (6.6ms)
+  Rendered layouts/_header.html.erb (0.5ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.7ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 141ms (Views: 138.8ms | ActiveRecord: 0.6ms)
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE (LOWER("users"."email") = LOWER('shonna.sims@gmail.com') AND "users"."id" != 2) LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  UPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = 2  [["admin", "t"], ["updated_at", "2015-03-10 16:31:21.696707"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+
+
+Started GET "/events/3" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+Processing by EventsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mEvent Load (0.3ms)[0m  [1mSELECT  "events".* FROM "events"  WHERE "events"."id" = ? LIMIT 1[0m  [["id", 3]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 3]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?[0m  [["event_id", 3]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT COUNT(*) FROM "registrations"  WHERE "registrations"."event_id" = ?  [["event_id", 3]]
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  Rendered events/show.html.erb within layouts/application (7.1ms)
+  Rendered layouts/_header.html.erb (0.7ms)
+  Rendered layouts/_flashes.html.erb (0.1ms)
+  Rendered layouts/_sidebar.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 146ms (Views: 143.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/normalize.css?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/elements.css?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/events.css?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/buttons.css?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/layout.css?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/forms.css?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/events.js?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/registrations.js?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/sessions.js?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
+
+
+Started GET "/assets/katacamp.png" for 127.0.0.1 at 2015-03-10 09:31:30 -0700
