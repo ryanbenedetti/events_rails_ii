@@ -10,9 +10,12 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @likers = @event.likers
 
+
     if current_user
       @current_like = current_user.likes.find_by(event_id: @event.id)
     end
+
+    @categories = @event.categories
   end
   
   def edit
@@ -56,6 +59,6 @@ private
 
 
   def event_params
-    params.require(:event).permit(:name, :description, :location, :price, :starts_at, :image_file_name, :capacity)
+    params.require(:event).permit(:name, :description, :location, :price, :starts_at, :image_file_name, :capacity, category_ids: [])
   end
 end
