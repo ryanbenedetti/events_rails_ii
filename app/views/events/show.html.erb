@@ -22,18 +22,19 @@
   <% end %>
 <% end %>
 
+<% content_for(:side) do %>
+  <% if @likers.any? %>
 
-<% if @likers.any? %>
-
-  <h3>Likers</h3>
-  <ul>
-    <% @likers.each do |user| %>
-      <li> 
-        <%= link_to user.name, user %> 
-      </li>
-    <% end %>
-  </ul>
-  
+    <h3>Likers</h3>
+    <ul>
+      <% @likers.each do |user| %>
+        <li> 
+          <%= link_to user.name, user %> 
+        </li>
+      <% end %>
+    </ul>
+    
+  <% end %>
 <% end %>
 
    <h3>Categories</h3>
